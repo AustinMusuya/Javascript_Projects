@@ -14,9 +14,9 @@ app.use(morgan("common"));
 
 app.get("/", (req, res) => {
   console.log(req.rawHeaders);
-  res.send("Hello World");
+  res.send("<h1>Hello World</h1>");
 });
 
 app.listen(port, () => {
-  console.log(`Listening on ${port}`);
+  console.log(`Server running on port ${port}`);
 });
