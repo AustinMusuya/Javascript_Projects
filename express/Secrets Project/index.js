@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 app.use(login); // Middleware for authentication
 
 app.post("/check", (req, res) => {
-  console.log(req.body["password"]);
+  console.log(req.body);
   res.sendFile(__dirname + "/public/secret.html");
 });
 
