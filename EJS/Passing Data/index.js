@@ -12,7 +12,9 @@ app.get("/", (req, res) => {
 
 app.post("/submit", (req, res) => {
   console.log(req.body);
-  res.render("index.ejs", req.body);
+  const sum = req.body["fName"].length + req.body["lName"].length;
+  const message = `There are ${sum} letters in your name`;
+  res.render("index.ejs", { message });
 });
 
 app.listen(port, () => {
