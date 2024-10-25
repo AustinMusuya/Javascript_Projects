@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import morgan from "morgan";
 
 const app = express();
 const port = 4000;
@@ -37,13 +38,14 @@ let lastId = 3;
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan("dev"));
 
 //Write your code here//
 
 //CHALLENGE 1: GET All posts
 app.get("/posts", (req, res) => {
   res.send("<h1>Succesfully Connected</h1>");
-  console.log(res.status);
+  res.status;
 });
 
 //CHALLENGE 2: GET a specific post by id
