@@ -44,15 +44,48 @@ app.use(morgan("dev"));
 
 //CHALLENGE 1: GET All posts
 app.get("/posts", (req, res) => {
-  res.send("<h1>Succesfully Connected</h1>");
-  res.status;
+  res.json(posts);
 });
 
 //CHALLENGE 2: GET a specific post by id
+app.get("/posts/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const specificPost = posts.find((post) => post.id === id);
+  res.json(specificPost);
+});
 
 //CHALLENGE 3: POST a new post
+app.post("/posts", (req, res) => {
+  const postJoke = {
+    id: posts.length + 1,
+    title: req.body.title,
+    content: req.body.content,
+    author: req.body.author,
+    date: req.body.date,
+  };
+  posts.push(postJoke);
+  console.log(posts.slice(-1));
+  res.json(postJoke);
+});
 
 //CHALLENGE 4: PATCH a post when you just want to update one parameter
+app.patch("/posts/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const existingPost = posts.find((post) => post.id === id);
+
+  const replacementPost = {
+    id: id,
+    title: req.body.title || existingPost.title,
+    content: req.body.content || existingPost.content,
+    author: req.body.author || existingPost.author,
+    date: req.body.date || existingPost.date,
+  };
+
+  const index = posts.findIndex((post) => post.id === id);
+  posts[index] = replacementPost;
+  console.log(posts[index]);
+  res.json(replacementPost);
+});
 
 //CHALLENGE 5: DELETE a specific post by providing the post id.
 
