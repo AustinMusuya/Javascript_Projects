@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import morgan from "morgan";
 import axios from "axios";
 
 const app = express();
@@ -10,6 +11,7 @@ app.use(express.static("public"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(morgan("dev"));
 
 // Route to render the main page
 app.get("/", async (req, res) => {
