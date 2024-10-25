@@ -41,6 +41,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //Write your code here//
 
 //CHALLENGE 1: GET All posts
+app.get("/posts", (req, res) => {
+  res.send("<h1>Succesfully Connected</h1>");
+  console.log(res.status);
+});
 
 //CHALLENGE 2: GET a specific post by id
 
