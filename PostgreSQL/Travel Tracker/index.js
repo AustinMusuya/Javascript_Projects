@@ -44,15 +44,17 @@ app.get("/", async (req, res) => {
 
 // add a country that has been visited through post request
 app.post("/add", async (req, res) => {
-  const countryCode = req.body.country.toUpperCase();
-  console.log(countryCode);
+  const country = req.body.country;
+  console.log(country);
   // query to check if request is already in the table
   const checker = await db.query(
-    "SELECT country_code FROM visited_countries WHERE country_code =$1",
-    [countryCode]
+    "SELECT country_code FROM countries WHERE country_name =$1",
+    [country]
   );
   console.log(checker.rows);
   try {
+    const data = checker.rows[0];
+    const countryCode = data.country_code;
     await db.query("INSERT INTO visited_countries (country_code) VALUES ($1)", [
       countryCode,
     ]);
