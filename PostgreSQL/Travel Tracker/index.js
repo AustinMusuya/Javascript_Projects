@@ -47,19 +47,37 @@ app.post("/add", async (req, res) => {
   const country = req.body.country;
   console.log(country);
   // query to check if request is already in the table
-  const checker = await db.query(
-    "SELECT country_code FROM countries WHERE country_name =$1",
-    [country]
-  );
-  console.log(checker.rows);
   try {
+    const checker = await db.query(
+      "SELECT country_code FROM countries WHERE country_name =$1",
+      [country]
+    );
+    console.log(checker.rows);
     const data = checker.rows[0];
     const countryCode = data.country_code;
-    await db.query("INSERT INTO visited_countries (country_code) VALUES ($1)", [
-      countryCode,
-    ]);
-    res.redirect("/");
+    try {
+      await db.query(
+        "INSERT INTO visited_countries (country_code) VALUES ($1)",
+        [countryCode]
+      );
+      res.redirect("/");
+    } catch (error) {
+      console.log(error);
+      const countries = await checkVisited();
+      res.render("index.ejs", {
+        countries: countries,
+        total: countries.length,
+        error: "Country already added!",
+      });
+    }
   } catch (error) {
+    console.log(error);
+    const countries = await checkVisited();
+    res.render("index.ejs", {
+      countries: countries,
+      total: countries.length,
+      error: "Country doesn't exist!",
+    });
     console.log(error);
   }
 });
