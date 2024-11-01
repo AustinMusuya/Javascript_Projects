@@ -49,8 +49,8 @@ app.post("/add", async (req, res) => {
   // query to check if request is already in the table
   try {
     const checker = await db.query(
-      "SELECT country_code FROM countries WHERE country_name =$1",
-      [country]
+      "SELECT country_code FROM countries WHERE  LOWER (country_name) LIKE '%' || $1 ||'%';",
+      [country.toLowerCase()]
     );
     console.log(checker.rows);
     const data = checker.rows[0];
